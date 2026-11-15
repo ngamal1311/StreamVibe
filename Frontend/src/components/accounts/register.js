@@ -20,19 +20,18 @@ function Register() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError("");
+    e.preventDefault();
+    setError("");
 
-        console.log(formData)
-        try {
+    try {
         const response = await fetch(
-            "http://localhost/api/register/",
+            `${process.env.REACT_APP_API_URL}/api/register/`,
             {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
             }
         );
 
@@ -42,13 +41,14 @@ function Register() {
             setError(JSON.stringify(data));
             return;
         }
-        
 
         navigate("/login");
-        } catch (error) {
+
+    } catch (error) {
+        console.error("Register error:", error);
         setError("Something went wrong. Please try again.");
-        }
-    };
+    }
+};
 
     return (
         <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center px-4">
