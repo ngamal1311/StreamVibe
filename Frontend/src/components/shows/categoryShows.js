@@ -37,7 +37,6 @@ export default function CategoryShows() {
   const [showFilter, setShowFilter] = useState(false);
   const [minRating, setMinRating] = useState(0);
 
-  const [saved, setSaved] = useState([]);
 
   // =============================
   // Favorite

@@ -1,8 +1,10 @@
+
 import {
     createContext,
     useContext,
     useEffect,
     useState,
+    useCallback,
 } from "react";
 
 import { useAuth } from "./AuthContext";
@@ -16,16 +18,18 @@ export function SavedProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     // Get saved items
-    const getSaved = async () => {
+    const getSaved = useCallback(async () => {
         if (!accessToken) {
             setSaved([]);
             setLoading(false);
             return;
         }
 
+        setLoading(true);
+
         try {
             const response = await fetch(
-                "http://localhost:8000/api/saved/",
+                `${process.env.REACT_APP_API_URL}/api/saved/`,
                 {
                     method: "GET",
                     headers: {
@@ -47,13 +51,13 @@ export function SavedProvider({ children }) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [accessToken]);
 
     useEffect(() => {
         if (authLoading) return;
 
         getSaved();
-    }, [accessToken, authLoading]);
+    }, [authLoading, getSaved]);
 
     // Check if item is saved
     const isSaved = (tmdbId, mediaType) => {
@@ -66,9 +70,11 @@ export function SavedProvider({ children }) {
 
     // Add to saved
     const addSaved = async (tmdbId, mediaType) => {
+        if (!accessToken) return false;
+
         try {
             const response = await fetch(
-                "http://localhost:8000/api/saved/",
+                `${process.env.REACT_APP_API_URL}/api/saved/`,
                 {
                     method: "POST",
                     headers: {
@@ -89,7 +95,15 @@ export function SavedProvider({ children }) {
                 return false;
             }
 
-            setSaved((prev) => [...prev, data]);
+            setSaved((prev) => {
+                const alreadySaved = prev.some(
+                    (item) =>
+                        item.tmdb_id === tmdbId &&
+                        item.media_type === mediaType
+                );
+
+                return alreadySaved ? prev : [...prev, data];
+            });
 
             return true;
         } catch (error) {
@@ -100,9 +114,11 @@ export function SavedProvider({ children }) {
 
     // Remove from saved
     const removeSaved = async (tmdbId, mediaType) => {
+        if (!accessToken) return false;
+
         try {
             const response = await fetch(
-                `http://localhost:8000/api/saved/${mediaType}/${tmdbId}/`,
+                `${process.env.REACT_APP_API_URL}/api/saved/${mediaType}/${tmdbId}/`,
                 {
                     method: "DELETE",
                     headers: {
@@ -111,9 +127,8 @@ export function SavedProvider({ children }) {
                 }
             );
 
-            const data = await response.json();
-
             if (!response.ok) {
+                const data = await response.json();
                 console.log(data);
                 return false;
             }

@@ -39,7 +39,6 @@ const {
   // =============================
   // Favorite & Save
   // =============================
-  const [saved, setSaved] = useState([]);
 
   const toggleFavorite = (e, movieId) => {
     e.preventDefault();
@@ -147,10 +146,6 @@ const {
   // =============================
   // Genre Title
   // =============================
-
-  const genreTitle =
-    genre?.charAt(0).toUpperCase() +
-    genre?.slice(1);
 
   // =============================
   // Loading

@@ -29,20 +29,13 @@ if not SECRET_KEY:
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
+    host.strip()
+    for host in os.environ.get(
+        "ALLOWED_HOSTS",
+        "localhost,127.0.0.1"
+    ).split(",")
+    if host.strip()
 ]
-
-# Render domain
-RENDER_HOST = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-
-if RENDER_HOST:
-    ALLOWED_HOSTS.append(RENDER_HOST)
-
-# Additional hosts from environment
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS", "localhost,127.0.0.1"
-).split(",")
 
 
 
@@ -188,19 +181,25 @@ REST_FRAMEWORK = {
 
 
 CORS_ALLOWED_ORIGINS = [
-    origin.strip()
+    origin.strip().rstrip("/")
     for origin in os.environ.get(
         "CORS_ALLOWED_ORIGINS",
-        "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173"
+        "http://localhost:3000,http://127.0.0.1:3000"
+    ).split(",")
+    if origin.strip()
+]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip().rstrip("/")
+    for origin in os.environ.get(
+        "CSRF_TRUSTED_ORIGINS",
+        ""
     ).split(",")
     if origin.strip()
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = [
-    f"https://{host}"
-    for host in ALLOWED_HOSTS
-    if host not in ["localhost", "127.0.0.1"]
-]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+

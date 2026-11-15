@@ -41,28 +41,32 @@ class ProfileView(APIView):
 class LoginView(APIView):
     def post(self, request):
         serializer = TokenObtainPairSerializer(data=request.data)
+
         if serializer.is_valid():
             access_token = serializer.validated_data['access']
             refresh_token = serializer.validated_data['refresh']
+
             response = Response(
-                {'access' : access_token, 'refresh': refresh_token},
+                {'access': access_token},
                 status=status.HTTP_200_OK
             )
-            
+
             response.set_cookie(
-                key = 'refresh',
-                value= refresh_token,
-                secure=False,
-                samesite="Lax",
-                httponly=True
+                key='refresh',
+                value=refresh_token,
+                httponly=True,
+                secure=True,
+                samesite='None',
+                max_age=7 * 24 * 60 * 60,
+                path='/'
             )
-            
-            return response;
-        response = Response(
+
+            return response
+
+        return Response(
             serializer.errors,
             status=status.HTTP_401_UNAUTHORIZED
         )
-    
 class RefreshView(APIView):
     
     def post(self, request):
@@ -95,8 +99,9 @@ class LogoutView(APIView):
         )
 
         response.delete_cookie(
-            "refresh_token",
-            samesite="Lax"
+            key='refresh',
+            path='/',
+            samesite='None'
         )
 
         return response

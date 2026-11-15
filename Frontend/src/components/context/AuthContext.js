@@ -3,29 +3,27 @@ import {
     useContext,
     useState,
     useEffect,
+    useCallback,
 } from "react";
 
 const AuthContext = createContext();
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export function AuthProvider({ children }) {
-
     const [accessToken, setAccessToken] = useState(null);
-
-    // هل لسه بنحاول نعرف حالة تسجيل الدخول؟
     const [loading, setLoading] = useState(true);
 
-    // تستخدم بعد Login
+    // Login
     const login = (token) => {
         setAccessToken(token);
     };
 
-    // تجيب Access Token جديد باستخدام Refresh Token
-    const refreshAccessToken = async () => {
-
+    // Refresh Access Token
+    const refreshAccessToken = useCallback(async () => {
         try {
-
             const response = await fetch(
-                "http://localhost:8000/api/token/refresh/",
+                `${API_URL}/api/token/refresh/`,
                 {
                     method: "POST",
                     credentials: "include",
@@ -40,47 +38,40 @@ export function AuthProvider({ children }) {
             }
 
             setAccessToken(data.access);
-
             return true;
 
-        } catch (error) {
-
+        } catch {
             setAccessToken(null);
             return false;
+        }
+    }, []);
 
+    // Logout
+    const logout = async () => {
+        try {
+            await fetch(
+                `${API_URL}/api/logout/`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                }
+            );
+        } catch (error) {
+            console.log("Logout error:", error);
+        } finally {
+            setAccessToken(null);
         }
     };
 
-    // Logout من ناحية React
-    const logout = async () => {
-    try {
-        await fetch(
-            "http://localhost:8000/api/logout/",
-            {
-                method: "POST",
-                credentials: "include",
-            }
-        );
-    } catch (error) {
-        console.log("Logout error:", error);
-    } finally {
-        setAccessToken(null);
-    }
-};
-
-    // عند فتح / Refresh الموقع
+    // Restore login when opening or refreshing the website
     useEffect(() => {
-
         const restoreLogin = async () => {
-
             await refreshAccessToken();
-
             setLoading(false);
         };
 
         restoreLogin();
-
-    }, []);
+    }, [refreshAccessToken]);
 
     return (
         <AuthContext.Provider

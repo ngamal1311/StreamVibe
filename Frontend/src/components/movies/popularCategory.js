@@ -36,9 +36,6 @@ export default function PopularGenreMovies() {
   const [showFilter, setShowFilter] = useState(false);
   const [minRating, setMinRating] = useState(0);
 
-  const [favorites, setFavorites] = useState([]);
-  const [saved, setSaved] = useState([]);
-
   // =============================
   // Favorite
   // =============================
@@ -153,10 +150,6 @@ export default function PopularGenreMovies() {
   // =============================
   // Genre Title
   // =============================
-
-  const genreTitle =
-    genre?.charAt(0).toUpperCase() +
-    genre?.slice(1);
 
   // =============================
   // Loading

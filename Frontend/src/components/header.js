@@ -1,7 +1,7 @@
+
 import { useState } from "react";
 
 import {
-    FaBell,
     FaBars,
     FaPlay,
     FaTimes,
@@ -19,7 +19,7 @@ function Header() {
         setIsMenuOpen(false);
     };
 
-    // ================= Navigation Links =================
+    // Navigation Links
     const navLinks = [
         {
             name: "Home",
@@ -35,34 +35,11 @@ function Header() {
         },
     ];
 
-    // ================= Icon Links =================
-    const iconLinks = [
-        {
-            name: "Favorites",
-            path: "/favorites",
-            icon: <FaHeart />,
-        },
-        {
-            name: "Saved",
-            path: "/saved",
-            icon: <FaBookmark />,
-        },
-        {
-            name: "Profile",
-            path: "/profile",
-            icon: <FaUser />,
-        },
-    ];
-
     return (
         <header className="absolute left-0 top-0 z-50 w-full">
-
             <nav className="mx-auto flex w-full max-w-[1920px] items-center justify-between px-4 py-4 sm:px-6 md:px-8 lg:px-10 xl:px-16 2xl:px-20">
 
-                {/* ================================================= */}
                 {/* Logo */}
-                {/* ================================================= */}
-
                 <NavLink
                     to="/home"
                     className="flex shrink-0 items-center gap-2"
@@ -76,15 +53,9 @@ function Header() {
                     </span>
                 </NavLink>
 
-
-                {/* ================================================= */}
                 {/* Desktop Navigation */}
-                {/* ================================================= */}
-
                 <div className="absolute left-1/2 hidden -translate-x-1/2 md:block">
-
                     <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-black/60 p-1.5 shadow-xl backdrop-blur-xl lg:gap-1.5">
-
                         {navLinks.map((link) => (
                             <NavLink
                                 key={link.path}
@@ -99,11 +70,9 @@ function Header() {
                                     font-medium
                                     transition-all
                                     duration-300
-
                                     lg:px-4
                                     lg:py-2.5
                                     lg:text-sm
-
                                     ${
                                         isActive
                                             ? "bg-[#1f1f1f] text-white shadow-sm"
@@ -115,23 +84,13 @@ function Header() {
                                 {link.name}
                             </NavLink>
                         ))}
-
                     </div>
-
                 </div>
 
-
-                {/* ================================================= */}
                 {/* Right Side */}
-                {/* ================================================= */}
-
                 <div className="flex items-center gap-1.5 text-white sm:gap-2">
 
-                    {/* ================= Search ================= */}
-
-
-                    {/* ================= Favorites ================= */}
-
+                    {/* Favorites */}
                     <NavLink
                         to="/favorites"
                         aria-label="Favorites"
@@ -146,10 +105,8 @@ function Header() {
                             rounded-full
                             transition-all
                             duration-300
-
                             sm:h-10
                             sm:w-10
-
                             ${
                                 isActive
                                     ? "bg-red-600/15 text-red-500"
@@ -161,9 +118,7 @@ function Header() {
                         <FaHeart className="text-sm sm:text-base" />
                     </NavLink>
 
-
-                    {/* ================= Saved ================= */}
-
+                    {/* Saved */}
                     <NavLink
                         to="/saved"
                         aria-label="Saved"
@@ -178,10 +133,8 @@ function Header() {
                             rounded-full
                             transition-all
                             duration-300
-
                             sm:h-10
                             sm:w-10
-
                             ${
                                 isActive
                                     ? "bg-yellow-500/15 text-yellow-400"
@@ -193,12 +146,7 @@ function Header() {
                         <FaBookmark className="text-sm sm:text-base" />
                     </NavLink>
 
-
-                    {/* ================= Notification ================= */}
-
-
-                    {/* ================= Profile ================= */}
-
+                    {/* Profile */}
                     <NavLink
                         to="/profile"
                         aria-label="Profile"
@@ -213,11 +161,9 @@ function Header() {
                             rounded-full
                             transition-all
                             duration-300
-
                             sm:flex
                             sm:h-10
                             sm:w-10
-
                             ${
                                 isActive
                                     ? "bg-white/10 text-white"
@@ -229,11 +175,7 @@ function Header() {
                         <FaUser className="text-sm sm:text-base" />
                     </NavLink>
 
-
-                    {/* ================================================= */}
                     {/* Mobile Menu Button */}
-                    {/* ================================================= */}
-
                     <button
                         type="button"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -254,7 +196,6 @@ function Header() {
                             duration-300
                             hover:bg-white/10
                             hover:text-white
-
                             md:hidden
                             sm:h-10
                             sm:w-10
@@ -266,16 +207,10 @@ function Header() {
                             <FaBars className="text-base" />
                         )}
                     </button>
-
                 </div>
 
-
-                {/* ================================================= */}
                 {/* Mobile Menu */}
-                {/* ================================================= */}
-
                 {isMenuOpen && (
-
                     <div
                         className="
                             absolute
@@ -289,19 +224,15 @@ function Header() {
                             p-2
                             shadow-2xl
                             backdrop-blur-xl
-
                             sm:left-auto
                             sm:right-6
                             sm:w-[280px]
-
                             md:hidden
                         "
                     >
-
                         <div className="flex flex-col gap-1">
 
                             {/* Main Links */}
-
                             {navLinks.map((link) => (
                                 <NavLink
                                     key={link.path}
@@ -316,7 +247,6 @@ function Header() {
                                         font-medium
                                         transition-all
                                         duration-300
-
                                         ${
                                             isActive
                                                 ? "bg-white/10 text-white"
@@ -329,14 +259,10 @@ function Header() {
                                 </NavLink>
                             ))}
 
-
                             {/* Divider */}
-
                             <div className="my-1 h-px bg-white/10" />
 
-
                             {/* Favorites */}
-
                             <NavLink
                                 to="/favorites"
                                 onClick={closeMenu}
@@ -350,7 +276,6 @@ function Header() {
                                     py-3
                                     text-sm
                                     transition-all
-
                                     ${
                                         isActive
                                             ? "bg-red-500/10 text-red-500"
@@ -363,9 +288,7 @@ function Header() {
                                 <span>Favorites</span>
                             </NavLink>
 
-
                             {/* Saved */}
-
                             <NavLink
                                 to="/saved"
                                 onClick={closeMenu}
@@ -379,7 +302,6 @@ function Header() {
                                     py-3
                                     text-sm
                                     transition-all
-
                                     ${
                                         isActive
                                             ? "bg-yellow-500/10 text-yellow-400"
@@ -392,12 +314,7 @@ function Header() {
                                 <span>Saved</span>
                             </NavLink>
 
-
-                            {/* Notifications */}
-
-
                             {/* Profile */}
-
                             <NavLink
                                 to="/profile"
                                 onClick={closeMenu}
@@ -411,7 +328,6 @@ function Header() {
                                     py-3
                                     text-sm
                                     transition-all
-
                                     ${
                                         isActive
                                             ? "bg-white/10 text-white"
@@ -425,13 +341,9 @@ function Header() {
                             </NavLink>
 
                         </div>
-
                     </div>
-
                 )}
-
             </nav>
-
         </header>
     );
 }

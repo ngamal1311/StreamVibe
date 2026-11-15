@@ -21,19 +21,19 @@ function Login() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError("");
+    e.preventDefault();
+    setError("");
 
-        try {
+    try {
         const response = await fetch(
-            "http://localhost:8000/api/login/",
+            `${process.env.REACT_APP_API_URL}/api/login/`,
             {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify(formData),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(formData),
             }
         );
 
@@ -44,18 +44,14 @@ function Login() {
             return;
         }
 
-        console.log("Login successful:", data);
         login(data.access);
 
-        // مؤقتًا فقط عشان نشوف الـ token
-        console.log("Access Token:", data.access);
-        console.log("Refresh Token:", data.refresh);
-
         navigate("/Home");
-        } catch (error) {
+    } catch (error) {
+        console.error("Login error:", error);
         setError("Something went wrong. Please try again.");
-        }
-    };
+    }
+};
 
     return (
         <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center px-4">

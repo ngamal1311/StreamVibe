@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Star, Tv } from "lucide-react";
 
 const MustWatchCard = ({
   id,

@@ -1,10 +1,7 @@
 import "./App.css";
 import Home from "./components/home";
-import Header from "./components/header";
-import Footer from "./components/footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Support from "./components/support/support";
-import Subscription from "./components/support/subscription/subscription";
 import MoviesAndShows from "./components/moviesAndShowsSections";
 import CategoryMovies from "./components/movies/categoryMovie";
 import PopularGenreMovies from "./components/movies/popularCategory";

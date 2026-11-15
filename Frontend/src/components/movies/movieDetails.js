@@ -156,19 +156,6 @@ function MovieDetails() {
     });
   };
 
-  const formatRuntime = (runtime) => {
-    if (!runtime) return "N/A";
-
-    const hours = Math.floor(runtime / 60);
-    const minutes = runtime % 60;
-
-    if (hours === 0) {
-      return `${minutes}m`;
-    }
-
-    return `${hours}h ${minutes}m`;
-  };
-
   const getRatingStars = (rating) => {
     const roundedRating = Math.round(rating / 2);
 

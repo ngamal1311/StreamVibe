@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
-
 import MediaSlider from "../../sliders/mediaslider";
-
 import TrendingCard from "../common/trendingCardToShows";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-const TrendingSection = ({items}) => {
+const TrendingSection = ({ items }) => {
   return (
     <MediaSlider
       title="Trending Shows"
