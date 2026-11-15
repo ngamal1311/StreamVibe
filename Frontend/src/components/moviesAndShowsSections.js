@@ -9,12 +9,10 @@ import Header from './header'
 export default function MoviesAndShows() {
     return (
         <>
-            <Header />
             <FeaturedMovie />
             <MoviesSections />
             <ShowsSections />
             <FreeTrial />
-            <Footer />
         </>
     )
 }
