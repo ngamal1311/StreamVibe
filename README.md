@@ -1,6 +1,5 @@
 # 🎬 StreamVibe
 
-**Discover. Watch. Enjoy.**
 
 StreamVibe is a responsive movie and TV shows discovery platform where users can explore trending movies, discover popular TV shows, browse different genres, and manage their personal watchlists.
 
