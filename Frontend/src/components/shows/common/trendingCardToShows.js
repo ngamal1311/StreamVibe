@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Clock, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 
 const TrendingCard = ({
   id,

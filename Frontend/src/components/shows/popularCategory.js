@@ -2,14 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 
 import { Link, useParams } from "react-router-dom";
 
-import {
-  ChevronDown,
-  Heart,
-  Bookmark,
-  SlidersHorizontal,
-  Star,
-  Tv,
-} from "lucide-react";
 
 import { getShowsByGenre } from "../../api/shows";
 import {useFavorites} from '../context/FavContext'
@@ -43,12 +35,6 @@ const {
   const [showFilter, setShowFilter] = useState(false);
   const [minRating, setMinRating] = useState(0);
 
-  const [favorites, setFavorites] = useState([]);
-  const [saved, setSaved] = useState([]);
-
-  // =============================
-  // Get Shows From TMDB API
-  // =============================
 
   useEffect(() => {
     const fetchShows = async () => {
@@ -75,10 +61,6 @@ const {
     fetchShows();
   }, [id]);
 
-  // =============================
-  // Favorite
-  // =============================
-
   const toggleFavorite = (e, showId) => {
     e.preventDefault();
     e.stopPropagation();
@@ -91,9 +73,6 @@ const {
       removeFavorite(showId, 'show')
     }
   };
-  // =============================
-  // Save
-  // =============================
 
   const toggleSave = (e, showId) => {
     e.preventDefault();
@@ -107,9 +86,7 @@ const {
     }
   };
 
-  // =============================
-  // Filter + Sort
-  // =============================
+
 
   const filteredShows = useMemo(() => {
     let result = shows.filter(
